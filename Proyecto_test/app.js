@@ -1,23 +1,29 @@
 const express = require('express');
 const path = require('path');
-const app = express();
+const swaggerUI = require('swagger-ui-express');
+const swaggerDocumentation = require('./generate-swagger.json'); // Asegúrate de que esté en la raíz o cambia la ruta
 const db = require('./config/database');
 
-// Middleware
+const app = express();
+
+// Middleware para parsear JSON
 app.use(express.json());
 
-// 👉 Servir archivos estáticos (HTML, CSS, JS) desde la carpeta "public"
+// Servir archivos estáticos desde /public
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 👉 Rutas para autenticación (registro y login)
+// Swagger docs disponibles en /api-docs
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocumentation));
+app.use('/document', swaggerUI.serve, swaggerUI.setup(swaggerDocumentation));
+// Rutas de autenticación (registro/login)
 const userRoutes = require('./routes/users');
-app.use('/api/auth', userRoutes); // POST /api/auth/register y /api/auth/login
+app.use('/api/auth', userRoutes);
 
-// 👉 Rutas para gestión de usuarios (listar, registrar desde admin)
+// Rutas de gestión de usuarios (listar, registrar)
 const usuariosRoutes = require('./routes/usuarios');
-app.use('/api/usuarios', usuariosRoutes); // GET/POST /api/usuarios
+app.use('/api/usuarios', usuariosRoutes);
 
-// Ruta para verificar que el servidor está funcionando
+// Ruta de prueba
 app.get('/', (req, res) => {
   res.send('¡Servidor funcionando correctamente!');
 });
@@ -30,6 +36,13 @@ app.get('/api/burgers', (req, res) => {
     }
     res.status(200).json(results);
   });
+});
+
+// Iniciar el servidor
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor iniciado en http://localhost:${PORT}`);
+  console.log(`📚 Documentación Swagger en http://localhost:${PORT}/api-docs`);
 });
 
 module.exports = app;

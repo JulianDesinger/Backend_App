@@ -4,24 +4,25 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "jest"
+    "test": "jest",
+    "swagger": "node generate-swagger.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
-    "express": "~4.16.1",
+    "express": "^4.21.2",
     "http-errors": "~1.6.3",
-    "jade": "~1.11.0",
+    "jade": "^0.29.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "~1.9.1",
     "mysql2": "^3.14.0",
-    "sequelize": "^6.37.7"
+    "sequelize": "^6.37.7",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "jest": "^29.7.0",
-    "supertest": "^7.1.0"
+    "supertest": "^7.1.0",
+    "swagger-autogen": "^2.23.7"
   }
-  
 }
-
