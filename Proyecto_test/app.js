@@ -1,10 +1,16 @@
 const express = require('express');
 const path = require('path');
+const helmet = require('helmet');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./config/swagger');
+const { limiter } = require('./middleware/security');
 const app = express();
 const db = require('./config/database');
 
-// Middleware
-app.use(express.json());
+// Middleware de seguridad
+app.use(helmet()); // Protección de cabeceras HTTP
+app.use(limiter); // Rate limiting
+app.use(express.json({ limit: '10kb' })); // Limitar tamaño del payload
 
 // 👉 Servir archivos estáticos (HTML, CSS, JS) desde la carpeta "public"
 app.use(express.static(path.join(__dirname, 'public')));
@@ -30,6 +36,18 @@ app.get('/api/burgers', (req, res) => {
     }
     res.status(200).json(results);
   });
+});
+
+// Configuración de Swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Manejo de errores global
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ 
+        error: 'Error interno del servidor',
+        requestId: req.id // Para seguimiento de errores
+    });
 });
 
 module.exports = app;

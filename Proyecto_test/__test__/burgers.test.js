@@ -8,7 +8,7 @@ beforeAll(async () => {
   connection = await mysql.createConnection({
     host: 'localhost',
     user: 'root', // Ajusta según tu configuración
-    password: '', // Ajusta según tu configuración
+    password: 'Oracle123', // Ajusta según tu configuración
     database: 'burger_shop'
   });
 });
