@@ -21,7 +21,9 @@ app.use('/api/auth', userRoutes); // POST /api/auth/register y /api/auth/login
 
 // 👉 Rutas para gestión de usuarios (listar, registrar desde admin)
 const usuariosRoutes = require('./routes/usuarios');
+const menuRoutes = require('./routes/menu');
 app.use('/api/usuarios', usuariosRoutes); // GET/POST /api/usuarios
+app.use('/api/menu', menuRoutes);
 
 // Ruta para verificar que el servidor está funcionando
 app.get('/', (req, res) => {

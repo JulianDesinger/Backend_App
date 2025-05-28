@@ -1,5 +1,6 @@
 const request = require('supertest');
 const app = require('../../app');
+const db = require('../../config/database');
 
 describe('Pruebas de duplicados y roles', () => {
   test('Validar email duplicado', async () => {
@@ -44,4 +45,8 @@ describe('Pruebas de duplicados y roles', () => {
     expect(response.status).toBe(400);
     expect(response.body.error).toBeDefined();
   });
+});
+
+afterAll(async () => {
+  await db.end();
 });

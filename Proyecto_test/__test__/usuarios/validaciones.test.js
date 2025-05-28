@@ -1,5 +1,6 @@
 const request = require('supertest');
 const app = require('../../app');
+const db = require('../../config/database');
 
 describe('Pruebas de validaciones de usuario', () => {
   test('Validar formato de email incorrecto', async () => {
@@ -49,4 +50,8 @@ describe('Pruebas de validaciones de usuario', () => {
     expect(response.status).toBe(400);
     expect(response.body.errors).toBeDefined();
   });
+});
+
+afterAll(async () => {
+  await db.end();
 });

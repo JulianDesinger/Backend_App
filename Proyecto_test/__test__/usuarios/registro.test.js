@@ -30,3 +30,7 @@ describe('Pruebas de registro de usuario', () => {
     expect(usuarios.length).toBeGreaterThan(0);
   });
 });
+
+afterAll(async () => {
+  await db.end();
+});

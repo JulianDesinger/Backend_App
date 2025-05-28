@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const request = require('supertest');
 const app = require('../../app');
+const db = require('../../config/database');
 
 describe('Pruebas de autenticación', () => {
   test('Validar token expirado', async () => {
@@ -15,4 +16,8 @@ describe('Pruebas de autenticación', () => {
     expect(response.status).toBe(403);
     expect(response.body.error).toContain('Token inválido');
   });
+});
+
+afterAll(async () => {
+  await db.end();
 });
