@@ -38,6 +38,24 @@ app.get('/api/burgers', (req, res) => {
   });
 });
 
+// Ruta para verificar la conexión a la base de datos
+app.get('/api/test-connection', async (req, res) => {
+  try {
+    const [result] = await db.query('SELECT 1');
+    res.json({ 
+      status: 'success', 
+      message: 'Conexión a la base de datos establecida correctamente',
+      result: result
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      status: 'error', 
+      message: 'Error al conectar con la base de datos',
+      error: error.message 
+    });
+  }
+});
+
 // Configuración de Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
