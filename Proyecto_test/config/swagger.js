@@ -13,6 +13,20 @@ const swaggerDefinition = {
       description: 'Servidor de desarrollo',
     },
   ],
+  // Configuración de seguridad
+  components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+    },
+  },
+  // Aplicar seguridad globalmente
+  security: [{
+    bearerAuth: [],
+  }],
 };
 
 const options = {
