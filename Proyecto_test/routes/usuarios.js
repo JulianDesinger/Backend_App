@@ -38,7 +38,7 @@ router.post('/', userValidations, async (req, res) => {
 });
 
 // Proteger ruta con autenticación y rol
-router.get('/', authenticateToken, checkRole(['admin']), async (req, res) => {
+router.get('/', authenticateToken, checkRole([1]), async (req, res) => {
     try {
         const usuarios = await obtenerUsuarios();
         res.json(usuarios);
