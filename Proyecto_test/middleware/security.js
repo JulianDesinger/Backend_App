@@ -16,7 +16,7 @@ const authenticateToken = (req, res, next) => {
         return res.status(401).json({ error: 'Token no proporcionado' });
     }
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    jwt.verify(token, 'tu_secreto_super_seguro', (err, user) => {
         if (err) {
             return res.status(403).json({ error: 'Token inválido' });
         }
@@ -31,7 +31,9 @@ const checkRole = (roles) => {
         if (!req.user) {
             return res.status(401).json({ error: 'Usuario no autenticado' });
         }
-        if (!roles.includes(req.user.rol)) {
+        // Permitir coincidencia si el rol es string o número
+        if (!roles.includes(req.user.rol) && !roles.includes(Number(req.user.rol))) {
+            console.log('Rol recibido en token:', req.user.rol, 'Roles permitidos:', roles);
             return res.status(403).json({ error: 'No tienes permiso para realizar esta acción' });
         }
         next();

@@ -16,7 +16,13 @@ exports.registrar = async (req, res) => {
             VALUES (?, ?, ?, ?)
         `, [nombre, email, hash, rol]);
 
-        res.status(201).json({ message: 'Usuario registrado', id: result.insertId });
+        // Determinar el nombre del rol
+        let nombreRol = '';
+        if (rol == 1) nombreRol = 'admin';
+        else if (rol == 2) nombreRol = 'cliente';
+        else nombreRol = `rol ${rol}`;
+
+        res.status(201).json({ message: `Usuario registrado como ${nombreRol}`, id: result.insertId, rol: nombreRol });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -46,7 +52,13 @@ exports.login = async (req, res) => {
             { expiresIn: '2h' }
         );
 
-        res.json({ message: 'Login exitoso', token });
+        // Determinar el nombre del rol
+        let nombreRol = '';
+        if (usuario.rol_id == 1) nombreRol = 'admin';
+        else if (usuario.rol_id == 2) nombreRol = 'cliente';
+        else nombreRol = `rol ${usuario.rol_id}`;
+
+        res.json({ message: 'Login exitoso', token, rol: nombreRol });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
