@@ -66,6 +66,122 @@ const { obtenerMenus, obtenerMenuPorId, crearMenu, actualizarMenu, eliminarMenu 
  */
 
 /**
+ * @swagger
+ * /api/menu:
+ *   get:
+ *     summary: Obtiene todos los menús
+ *     tags: [Menú]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista de menús obtenida exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Menu'
+ *       401:
+ *         description: No autorizado
+ *       403:
+ *         description: No tiene permisos
+ *   post:
+ *     summary: Crea un nuevo menú
+ *     tags: [Menú]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/MenuInput'
+ *     responses:
+ *       201:
+ *         description: Menú creado exitosamente
+ *       401:
+ *         description: No autorizado
+ *       403:
+ *         description: No tiene permisos
+ * 
+ * /api/menu/{id}:
+ *   get:
+ *     summary: Obtiene un menú específico
+ *     tags: [Menú]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del menú
+ *     responses:
+ *       200:
+ *         description: Menú obtenido exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Menu'
+ *       401:
+ *         description: No autorizado
+ *       403:
+ *         description: No tiene permisos
+ *       404:
+ *         description: Menú no encontrado
+ *   put:
+ *     summary: Actualiza un menú existente
+ *     tags: [Menú]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del menú
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/MenuInput'
+ *     responses:
+ *       200:
+ *         description: Menú actualizado exitosamente
+ *       401:
+ *         description: No autorizado
+ *       403:
+ *         description: No tiene permisos
+ *       404:
+ *         description: Menú no encontrado
+ *   delete:
+ *     summary: Elimina un menú
+ *     tags: [Menú]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del menú
+ *     responses:
+ *       200:
+ *         description: Menú eliminado exitosamente
+ *       401:
+ *         description: No autorizado
+ *       403:
+ *         description: No tiene permisos
+ *       404:
+ *         description: Menú no encontrado
+ */
+
+/**
  * Ruta para obtener todos los menús.
  * Accesible para admin (1) y cliente (2).
  */
