@@ -5,6 +5,17 @@ const jwt = require('jsonwebtoken');
 // Secreto para el token (guárdalo bien)
 const SECRET = 'tu_secreto_super_seguro';
 
+/**
+ * Registra un nuevo usuario en el sistema
+ * @param {Object} req - Objeto request de Express
+ * @param {Object} req.body - Cuerpo de la petición
+ * @param {string} req.body.nombre - Nombre completo del usuario
+ * @param {string} req.body.email - Email único del usuario
+ * @param {string} req.body.contraseña - Contraseña del usuario
+ * @param {number} req.body.rol - Rol del usuario (1 = admin, 2 = cliente)
+ * @param {Object} res - Objeto response de Express
+ * @returns {Object} Respuesta con mensaje de éxito y datos del usuario
+ */
 exports.registrar = async (req, res) => {
     const { nombre, email, contraseña, rol } = req.body;
     try {
@@ -28,6 +39,17 @@ exports.registrar = async (req, res) => {
     }
 };
 
+/**
+ * Autentica un usuario y genera un token JWT
+ * @param {Object} req - Objeto request de Express
+ * @param {Object} req.body - Cuerpo de la petición
+ * @param {string} req.body.email - Email del usuario
+ * @param {string} req.body.contraseña - Contraseña del usuario
+ * @param {Object} res - Objeto response de Express
+ * @returns {Object} Respuesta con token JWT y datos del usuario
+ * @throws {Error} 404 si el usuario no existe
+ * @throws {Error} 401 si la contraseña es incorrecta
+ */
 exports.login = async (req, res) => {
     const { email, contraseña } = req.body;
     try {
