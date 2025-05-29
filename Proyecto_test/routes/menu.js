@@ -184,6 +184,8 @@ const { obtenerMenus, obtenerMenuPorId, crearMenu, actualizarMenu, eliminarMenu 
 /**
  * Ruta para obtener todos los menús.
  * Accesible para admin (1) y cliente (2).
+ * @route GET /api/menu
+ * @access Privado - Requiere autenticación y rol admin o cliente
  */
 router.get('/', authenticateToken, checkRole([1, 2]), async (req, res) => {
     try {
@@ -197,6 +199,12 @@ router.get('/', authenticateToken, checkRole([1, 2]), async (req, res) => {
 /**
  * Ruta para crear un nuevo menú.
  * Solo accesible para admin (1).
+ * @route POST /api/menu
+ * @access Privado - Requiere autenticación y rol admin
+ * @body {string} nombre - Nombre del menú
+ * @body {number} precio_total - Precio total del menú
+ * @body {number} burger_id - ID de la hamburguesa
+ * @body {number} bebida_id - ID de la bebida
  */
 router.post('/', authenticateToken, checkRole([1]), async (req, res) => {
     try {
@@ -211,6 +219,9 @@ router.post('/', authenticateToken, checkRole([1]), async (req, res) => {
 /**
  * Ruta para obtener un menú específico por ID.
  * Accesible para admin (1) y cliente (2).
+ * @route GET /api/menu/:id
+ * @access Privado - Requiere autenticación y rol admin o cliente
+ * @param {number} id - ID del menú a obtener
  */
 router.get('/:id', authenticateToken, checkRole([1, 2]), async (req, res) => {
     try {
@@ -227,6 +238,13 @@ router.get('/:id', authenticateToken, checkRole([1, 2]), async (req, res) => {
 /**
  * Ruta para actualizar un menú existente.
  * Solo accesible para admin (1).
+ * @route PUT /api/menu/:id
+ * @access Privado - Requiere autenticación y rol admin
+ * @param {number} id - ID del menú a actualizar
+ * @body {string} nombre - Nuevo nombre del menú
+ * @body {number} precio_total - Nuevo precio total
+ * @body {number} burger_id - Nuevo ID de hamburguesa
+ * @body {number} bebida_id - Nuevo ID de bebida
  */
 router.put('/:id', authenticateToken, checkRole([1]), async (req, res) => {
     try {
@@ -245,6 +263,9 @@ router.put('/:id', authenticateToken, checkRole([1]), async (req, res) => {
 /**
  * Ruta para eliminar un menú.
  * Solo accesible para admin (1).
+ * @route DELETE /api/menu/:id
+ * @access Privado - Requiere autenticación y rol admin
+ * @param {number} id - ID del menú a eliminar
  */
 router.delete('/:id', authenticateToken, checkRole([1]), async (req, res) => {
     try {
